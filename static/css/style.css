@@ -1,0 +1,202 @@
+/* General Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f8ff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background-color: #4682b4;
+    color: white;
+    padding: 15px;
+    font-size: 22px;
+    text-align: center;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Centering Forms */
+.form-container {
+    width: 90%;
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: auto;
+    margin-top: 40px;
+}
+
+/* Form Inputs */
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Buttons */
+button {
+    background-color: #4682b4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #5a9bd5;
+    transform: scale(1.05);
+}
+
+/* Small Buttons */
+.small-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+/* Centered Buttons */
+.center-btn {
+    display: block;
+    margin: 15px auto;
+}
+
+/* Profile Icon Styling */
+.top-right {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.profile-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    width: 40%;
+    margin: 10% auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.modal-content button {
+    padding: 8px 14px;
+    background-color: #4682b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #5a9bd5;
+}
+
+/* Back Home Button */
+.back-home-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 8px 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.back-home-button:hover {
+    background-color: #45a049;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    width: 100%;
+    margin-top: auto;
+    font-size: 14px;
+}
+
+/* Footer Social Icons */
+footer .social-icons img {
+    width: 28px;
+    margin: 0 8px;
+    vertical-align: middle;
+}
+
+/* Profile Page - Centered Layout */
+.profile-container {
+    width: 60%;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Dashboard Table */
+.dashboard-table {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.dashboard-table th, .dashboard-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.dashboard-table th {
+    background-color: #4682b4;
+    color: white;
+}

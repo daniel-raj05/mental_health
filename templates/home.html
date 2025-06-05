@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Mental Health Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 flex flex-col items-center justify-center min-h-screen text-gray-700">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white w-full py-6 shadow-md flex justify-between items-center px-6">
+        <h1 class="text-3xl font-semibold">Mental Health Support System</h1>
+
+        <!-- Profile Picture (Dynamically Loaded) -->
+        <a href="{{ url_for('profile') }}">
+            <img src="{{ url_for('static', filename='profile_pics/' + profile_pic) }}" 
+                 alt="Profile Picture" class="w-12 h-12 rounded-full border-2 border-white shadow-md">
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="text-center p-6 max-w-2xl">
+        <h2 class="text-2xl font-semibold text-blue-700">Take Control of Your Mental Well-being</h2>
+        <p class="mt-4 text-lg leading-relaxed">
+            This platform helps you <span class="font-bold">track your mental health</span> and provides valuable insights.  
+            Whether you're feeling <span class="font-bold">happy, stressed, or overwhelmed</span>, we offer  
+            <span class="text-blue-500 font-semibold">personalized suggestions</span>  
+            and expert recommendations to improve your well-being.
+        </p>
+        <p class="mt-3 text-lg leading-relaxed">
+            Our goal is to help you <span class="font-bold">maintain a healthy balance</span> by offering self-assessments  
+            and professional guidance. <span class="text-blue-600 font-bold">Get started today!</span>
+        </p>
+
+        <!-- Buttons -->
+        <div class="mt-6 flex gap-4 justify-center">
+            <a href="{{ url_for('login') }}" 
+                class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+                Login
+            </a>
+            <a href="{{ url_for('signup') }}" 
+                class="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition">
+                Sign Up
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-800 text-white py-6 text-center mt-auto">
+        <p>&copy; 2025 Mental Health Support System. All rights reserved.</p>
+        <p>Contact: <span class="text-blue-300">support@mentalhealth.com</span> | Phone: <span class="text-blue-300">+91 98765 43210</span></p>
+        
+        <!-- Social Icons -->
+        <!-- Social Icons -->
+<div class="flex justify-center mt-3 space-x-8">
+    <a href="https://www.facebook.com/" target="_blank" class="flex flex-col items-center">
+        <img class="w-10 h-10 mb-2" src="{{ url_for('static', filename='images/facebook-icon.png') }}" alt="Follow us on Facebook">
+        <span class="text-sm text-gray-300">Facebook</span>
+    </a>
+    <a href="https://twitter.com/" target="_blank" class="flex flex-col items-center">
+        <img class="w-10 h-10 mb-2" src="{{ url_for('static', filename='images/twitter-icon.png') }}" alt="Follow us on X (Twitter)">
+        <span class="text-sm text-gray-300">X (Twitter)</span>
+    </a>
+    <a href="https://www.instagram.com/" target="_blank" class="flex flex-col items-center">
+        <img class="w-10 h-10 mb-2" src="{{ url_for('static', filename='images/instagram-icon.png') }}" alt="Follow us on Instagram">
+        <span class="text-sm text-gray-300">Instagram</span>
+    </a>
+</div>
+
+    </footer>
+
+</body>
+</html>

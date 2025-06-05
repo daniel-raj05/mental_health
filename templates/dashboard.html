@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 text-gray-900">
+    <header class="bg-blue-600 text-white py-4 text-center shadow-md flex justify-between items-center px-6">
+        <h1 class="text-3xl font-bold">Dashboard</h1>
+        <div class="flex items-center space-x-4">
+            <a href="{{ url_for('main_home') }}" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">🏠 Home</a>
+            <a href="{{ url_for('profile') }}" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Profile</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Logout</a>
+            <!-- Profile Picture -->
+            <a href="{{ url_for('profile') }}">
+                <img src="{{ url_for('static', filename='profile_pics/' + profile_pic) }}" 
+                     alt="Profile Picture" class="w-12 h-12 rounded-full border-2 border-white shadow-md">
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto my-8 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-center">Your Assessment History</h2>
+
+        <div class="overflow-x-auto mt-5">
+            {% if assessments %}
+                <table class="w-full border-collapse shadow-md rounded-lg text-center">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="px-4 py-3">Date</th>
+                            <th class="px-4 py-3">Mood</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for mood, date in assessments %}
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-4 py-3">{{ date }}</td>
+                            <td class="px-4 py-3">{{ mood }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center text-gray-600 mt-4">No previous records. Please take an assessment.</p>
+            {% endif %}
+        </div>
+
+        <button onclick="startAnalysis()" class="mt-6 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Run Analysis</button>
+
+        <!-- Analysis Result Section -->
+<div id="analysis-result" class="hidden mt-6 bg-gray-100 p-6 rounded-lg shadow-md">
+    <h3 class="text-xl font-semibold text-center">Your Analysis Results</h3>
+    <table class="w-full mt-4 border-collapse text-center">
+        <thead class="bg-gray-600 text-white">
+            <tr>
+                <th class="px-4 py-3">Most Frequent Mood</th>
+                <th class="px-4 py-3">Suggestion</th>
+                <th class="px-4 py-3">Preferred Doctor</th>
+                <th class="px-4 py-3">Clinic/Hospital Details</th>
+                <th class="px-4 py-3">Motivational Quote</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <tr>
+                <td id="most-frequent" class="px-4 py-3"></td>
+                <td id="suggestion" class="px-4 py-3"></td>
+                <td id="doctor" class="px-4 py-3"></td>
+                <td id="clinic-details" class="px-4 py-3"></td>
+                <td id="quote" class="px-4 py-3"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function startAnalysis() {
+        let moods = JSON.parse('{{ assessments | tojson | safe }}');
+
+        if (!moods.length) {
+            alert("No previous records to analyze.");
+            return;
+        }
+
+        let moodCounts = {};
+        moods.forEach(entry => {
+            let mood = entry[0];
+            moodCounts[mood] = (moodCounts[mood] || 0) + 1;
+        });
+
+        let mostFrequentMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b, "None");
+
+        let suggestions = {
+            "Happy": "Keep doing what makes you happy!",
+            "Sad": "Try talking to a close friend or engaging in activities you enjoy.",
+            "Stressed": "Take breaks and practice relaxation techniques.",
+            "Angry": "Consider meditation or physical exercise to cool down."
+        };
+
+        let doctors = {
+            "Sad": "Dr. Aravind Kumar (Psychologist)",
+            "Stressed": "Dr. Priya Sharma (Therapist)",
+            "Angry": "Dr. Ramesh Iyer (Counselor)"
+        };
+
+        let clinics = {
+            "Sad": "MindCare Clinic, Chennai, Tamil Nadu",
+            "Stressed": "Serene Wellness Center, Coimbatore, Tamil Nadu",
+            "Angry": "Peaceful Minds Institute, Madurai, Tamil Nadu"
+        };
+
+        let quotes = {
+            "Happy": "Happiness is not something ready-made. It comes from your own actions.",
+            "Sad": "Every storm runs out of rain.",
+            "Stressed": "It's okay to take a break. You deserve it.",
+            "Angry": "Holding onto anger is like drinking poison and expecting the other person to die."
+        };
+
+        document.getElementById("most-frequent").innerText = mostFrequentMood;
+        document.getElementById("suggestion").innerText = suggestions[mostFrequentMood] || "Stay positive!";
+        document.getElementById("doctor").innerText = doctors[mostFrequentMood] || "No specialist needed.";
+        document.getElementById("clinic-details").innerText = clinics[mostFrequentMood] || "No clinic required.";
+        document.getElementById("quote").innerText = quotes[mostFrequentMood] || "Keep pushing forward.";
+
+        document.getElementById("analysis-result").classList.remove("hidden");
+    }
+</script>
+
+</body>
+</html>

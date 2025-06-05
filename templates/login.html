@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 flex flex-col items-center justify-center min-h-screen text-gray-700">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white w-full py-6 shadow-md flex justify-between items-center px-6">
+        <a href="{{ url_for('home') }}" class="px-4 py-2 bg-gray-600 text-white rounded-lg shadow-md hover:bg-gray-700 transition">
+            🏠 Home
+        </a>
+        
+        <!-- Profile Picture (Dynamically Loaded) -->
+        <a href="{{ url_for('profile') }}">
+            <img src="{{ url_for('static', filename='profile_pics/' + profile_pic) }}" 
+                 alt="Profile Picture" class="w-12 h-12 rounded-full border-2 border-white shadow-md">
+        </a>
+    </header>
+
+    <!-- Login Form -->
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 mt-10">
+        <h2 class="text-2xl font-semibold text-blue-700 text-center">Login</h2>
+        <form method="POST" class="mt-6">
+            <input type="email" name="email" placeholder="Email" required
+                class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
+            <input type="password" name="password" placeholder="Password" required
+                class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
+            <button type="submit"
+                class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+                Login
+            </button>
+        </form>
+        <p class="mt-4 text-center text-gray-600">Don't have an account? 
+            <a href="{{ url_for('signup') }}" class="text-blue-600 hover:underline">Sign Up</a>
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-800 text-white py-6 text-center mt-10">
+        <p>&copy; 2025 Mental Health Support System. All rights reserved.</p>
+        <p>Contact: <span class="text-blue-300">support@mentalhealth.com</span> | Phone: <span class="text-blue-300">+91 98765 43210</span></p>
+        
+        <!-- Social Icons -->
+        <!-- Social Icons -->
+<div class="flex justify-center mt-3 space-x-8">
+    <a href="https://www.facebook.com/" target="_blank" class="flex flex-col items-center">
+        <img class="w-10 h-10 mb-2" src="{{ url_for('static', filename='images/facebook-icon.png') }}" alt="Follow us on Facebook">
+        <span class="text-sm text-gray-300">Facebook</span>
+    </a>
+    <a href="https://twitter.com/" target="_blank" class="flex flex-col items-center">
+        <img class="w-10 h-10 mb-2" src="{{ url_for('static', filename='images/twitter-icon.png') }}" alt="Follow us on X (Twitter)">
+        <span class="text-sm text-gray-300">X (Twitter)</span>
+    </a>
+    <a href="https://www.instagram.com/" target="_blank" class="flex flex-col items-center">
+        <img class="w-10 h-10 mb-2" src="{{ url_for('static', filename='images/instagram-icon.png') }}" alt="Follow us on Instagram">
+        <span class="text-sm text-gray-300">Instagram</span>
+    </a>
+</div>
+
+    </footer>
+
+    <!-- Popup Modal -->
+    <div id="popup-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <p id="popup-message" class="text-lg font-semibold text-gray-800"></p>
+            <button onclick="closePopup()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showPopup(message, redirect = null) {
+            document.getElementById("popup-message").innerText = message;
+            document.getElementById("popup-modal").classList.remove("hidden");
+
+            if (redirect) {
+                setTimeout(() => {
+                    window.location.href = redirect;
+                }, 3000);  // Redirect after 3 seconds
+            }
+        }
+
+        function closePopup() {
+            document.getElementById("popup-modal").classList.add("hidden");
+        }
+
+        // Show popups from Flask flash messages
+        window.onload = function() {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    showPopup("{{ message }}", "{{ url_for('main_home') if category == 'success' else '' }}");
+                {% endfor %}
+            {% endwith %}
+        };
+    </script>
+
+</body>
+</html>

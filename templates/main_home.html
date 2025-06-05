@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Mental Health Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex flex-col items-center justify-center text-gray-700">
+
+    <!-- Header -->
+    <header class="w-full bg-blue-600 text-white py-4 text-center relative">
+        <h1 class="text-3xl font-semibold">Mental Health Support System</h1>
+        <div class="absolute top-4 right-6">
+            <a href="{{ url_for('profile') }}">
+                <img src="{{ url_for('static', filename='profile_pics/' + profile_pic) }}" 
+                     alt="Profile" 
+                     class="w-12 h-12 rounded-full shadow-lg object-cover border-2 border-white">
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="w-full max-w-2xl text-center mt-8 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-blue-700">Welcome to Your Mental Health Support System</h2>
+        <p class="mt-2 text-gray-600">Your mental health matters. Take an assessment or manually track your mood.</p>
+
+        <div class="mt-6 space-y-6">
+            <button onclick="openAssessment()" class="w-full px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+                Start an Assessment
+            </button>
+            <button onclick="openManualAssessment()" class="w-full px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition">
+                Start a Manual Assessment
+            </button>
+            <a href="{{ url_for('dashboard') }}" class="block mt-6">
+                <button class="w-full px-6 py-3 bg-gray-600 text-white rounded-lg shadow-md hover:bg-gray-700 transition">
+                    Go to Dashboard
+                </button>
+            </a>
+        </div>
+    </main>
+
+    <!-- Full Assessment Modal -->
+    <div id="assessment-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 class="text-xl font-semibold text-blue-700">Mental Health Assessment</h3>
+            <form id="assessment-form" class="mt-4 space-y-4">
+                <label>1. How have you been feeling overall this week?</label>
+                <select name="q1" class="w-full p-2 border rounded-lg">
+                    <option value="Happy">Happy</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Sad">Sad</option>
+                    <option value="Angry">Angry</option>
+                </select>
+
+                <label>2. Have you been able to enjoy daily activities?</label>
+                <select name="q2" class="w-full p-2 border rounded-lg">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <label>3. Have you been feeling anxious or restless?</label>
+                <select name="q3" class="w-full p-2 border rounded-lg">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <div class="flex justify-between mt-4">
+                    <button type="button" onclick="submitAssessment()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                        Submit
+                    </button>
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Manual Assessment Modal -->
+    <div id="manual-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 class="text-xl font-semibold text-blue-700">Manual Assessment</h3>
+            <p class="mt-2 text-gray-600">Select how you're feeling right now:</p>
+            <select id="manual-mood" class="w-full p-2 border rounded-lg mt-2">
+                <option value="Happy">Happy</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Sad">Sad</option>
+                <option value="Angry">Angry</option>
+            </select>
+
+            <div class="flex justify-between mt-4">
+                <button type="button" onclick="submitManualAssessment()" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                    Submit
+                </button>
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-800 text-white py-6 text-center mt-10">
+        <p>&copy; 2025 Mental Health Support System. All rights reserved.</p>
+        <p>Contact: <span class="text-blue-300">support@mentalhealth.com</span> | Phone: <span class="text-blue-300">+91 98765 43210</span></p>
+        
+        <!-- Social Icons -->
+        <div class="flex justify-center mt-3 space-x-4">
+            <a href="#"><img class="w-8" src="{{ url_for('static', filename='images/facebook-icon.png') }}" alt="Facebook"></a>
+            <a href="#"><img class="w-8" src="{{ url_for('static', filename='images/twitter-icon.png') }}" alt="Twitter"></a>
+            <a href="#"><img class="w-8" src="{{ url_for('static', filename='images/instagram-icon.png') }}" alt="Instagram"></a>
+        </div>
+    </footer>
+
+    <script>
+        function openAssessment() {
+            document.getElementById("assessment-modal").classList.remove("hidden");
+        }
+
+        function openManualAssessment() {
+            document.getElementById("manual-modal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("assessment-modal").classList.add("hidden");
+            document.getElementById("manual-modal").classList.add("hidden");
+        }
+
+        function showPopup(message) {
+            alert(message);  // Show success message
+        }
+
+        function submitAssessment() {
+            let form = document.getElementById("assessment-form");
+            let data = new FormData(form);
+            fetch("/submit-assessment", {
+                method: "POST",
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                showPopup("Your full assessment has been submitted successfully!");
+                closeModal();
+                window.location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function submitManualAssessment() {
+            let mood = document.getElementById("manual-mood").value;
+            fetch("/submit-assessment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ mood: mood })
+            })
+            .then(response => response.json())
+            .then(data => {
+                showPopup("Your manual mood entry has been submitted successfully!");
+                closeModal();
+                window.location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>
